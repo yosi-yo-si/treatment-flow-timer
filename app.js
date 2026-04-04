@@ -99,8 +99,7 @@ function bindEvents() {
 
   nextButton.addEventListener("click", () => {
     const payload = createPayload();
-    setFormMessage("次画面へ渡す payload をコンソールに出力しました。");
-    console.log("TreatmentConditionPayload", payload);
+
   });
 }
 
