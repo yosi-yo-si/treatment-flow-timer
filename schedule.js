@@ -51,20 +51,12 @@ const warningList = document.getElementById("warningList");
 const confirmButton = document.getElementById("confirmButton");
 const confirmMessage = document.getElementById("confirmMessage");
 const payloadPreview = document.getElementById("payloadPreview");
-const loadGuard = document.getElementById("loadGuard");
-const pageSections = Array.from(document.querySelectorAll("main > :not(#loadGuard)"));
+
 
 init();
 
 function init() {
   const condition = getConditionInput();
-  if (!condition) {
-    showLoadGuard(
-      `施術条件データの読み込みに失敗しました。アンケート画面から再度「次へ」を押してください。` +
-        `（sessionStorage key: ${STORAGE_KEY}）`
-    );
-    return;
-  }
 
   state.sourceCondition = condition;
   state.summary.totalMin = condition.totalDurationMin;
@@ -75,40 +67,17 @@ function init() {
 
 function getConditionInput() {
   const raw = sessionStorage.getItem(STORAGE_KEY);
-  if (!raw) {
-    return null;
+
   }
 
   try {
     const parsed = JSON.parse(raw);
-    const normalized = {
+
       menuId: parsed.menuId,
       totalDurationMin: Number(parsed.totalDurationMin) || 0,
       focusAreas: Array.isArray(parsed.focusAreas) ? parsed.focusAreas : [],
       splitLeftRight: Boolean(parsed.splitLeftRight),
       inputVersion: Number(parsed.inputVersion) || 1,
-      createdAt: typeof parsed.createdAt === "string" ? parsed.createdAt : new Date().toISOString(),
-    };
-
-    if (!MENU_LABELS[normalized.menuId]) {
-      return null;
-    }
-
-    if (!Number.isInteger(normalized.totalDurationMin) || normalized.totalDurationMin < 1) {
-      return null;
-    }
-
-    return normalized;
-  } catch {
-    return null;
-  }
-}
-
-function showLoadGuard(message) {
-  loadGuard.classList.remove("hidden");
-  loadGuard.textContent = message;
-  pageSections.forEach((section) => section.classList.add("hidden"));
-}
 
 function initializeFramesByMenu(condition) {
   const total = condition.totalDurationMin;

@@ -4,7 +4,7 @@ const MENU_LABELS = {
   foot: "足ツボ",
   bodywork_foot: "もみほぐし＋足ツボ",
 };
-const STORAGE_KEY = "treatmentConditionInput";
+in
 
 const DURATION_OPTIONS_BY_MENU = {
   bodywork: [60, 75, 90, 120],
@@ -100,9 +100,7 @@ function bindEvents() {
 
   nextButton.addEventListener("click", () => {
     const payload = createPayload();
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-    setFormMessage("スケジュール作成画面へ移動します。");
-    window.location.href = "schedule.html";
+
   });
 }
 

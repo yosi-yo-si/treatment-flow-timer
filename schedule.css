@@ -30,7 +30,6 @@ body { margin: 0; background: var(--bg); color: var(--text); }
   padding: 16px;
 }
 
-.hidden { display: none; }
 
 h1 { margin: 0; font-size: 28px; }
 h2 { margin: 0 0 10px; font-size: 20px; }
@@ -38,12 +37,6 @@ h3 { margin: 0; font-size: 18px; }
 
 .header p { margin: 4px 0 0; color: var(--muted); }
 
-.load-guard {
-  border: 1px solid var(--warning-border);
-  background: var(--warning-bg);
-  color: #9a4f00;
-  font-weight: 600;
-}
 
 .summary-grid {
   display: grid;
