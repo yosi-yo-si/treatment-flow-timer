@@ -99,10 +99,7 @@ function bindEvents() {
 
   nextButton.addEventListener("click", () => {
     const payload = createPayload();
-    sessionStorage.setItem("treatmentConditionInput", JSON.stringify(payload));
-    setFormMessage("スケジュール作成画面へ移動します。");
-    console.log("TreatmentConditionPayload", payload);
-    window.location.href = "./schedule.html";
+
   });
 }
 
