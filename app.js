@@ -4,6 +4,7 @@ const MENU_LABELS = {
   foot: "足ツボ",
   bodywork_foot: "もみほぐし＋足ツボ",
 };
+in
 
 const DURATION_OPTIONS_BY_MENU = {
   bodywork: [60, 75, 90, 120],

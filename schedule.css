@@ -30,11 +30,13 @@ body { margin: 0; background: var(--bg); color: var(--text); }
   padding: 16px;
 }
 
+
 h1 { margin: 0; font-size: 28px; }
 h2 { margin: 0 0 10px; font-size: 20px; }
 h3 { margin: 0; font-size: 18px; }
 
 .header p { margin: 4px 0 0; color: var(--muted); }
+
 
 .summary-grid {
   display: grid;

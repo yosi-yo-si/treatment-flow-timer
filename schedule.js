@@ -52,10 +52,12 @@ const confirmButton = document.getElementById("confirmButton");
 const confirmMessage = document.getElementById("confirmMessage");
 const payloadPreview = document.getElementById("payloadPreview");
 
+
 init();
 
 function init() {
   const condition = getConditionInput();
+
   state.sourceCondition = condition;
   state.summary.totalMin = condition.totalDurationMin;
   initializeFramesByMenu(condition);
@@ -66,38 +68,16 @@ function init() {
 function getConditionInput() {
   const raw = sessionStorage.getItem(STORAGE_KEY);
 
-  if (!raw) {
-    return {
-      menuId: "bodywork",
-      totalDurationMin: 60,
-      focusAreas: [],
-      splitLeftRight: false,
-      inputVersion: 1,
-      createdAt: new Date().toISOString(),
-    };
   }
 
   try {
     const parsed = JSON.parse(raw);
-    return {
+
       menuId: parsed.menuId,
       totalDurationMin: Number(parsed.totalDurationMin) || 0,
       focusAreas: Array.isArray(parsed.focusAreas) ? parsed.focusAreas : [],
       splitLeftRight: Boolean(parsed.splitLeftRight),
       inputVersion: Number(parsed.inputVersion) || 1,
-      createdAt: parsed.createdAt || new Date().toISOString(),
-    };
-  } catch {
-    return {
-      menuId: "bodywork",
-      totalDurationMin: 60,
-      focusAreas: [],
-      splitLeftRight: false,
-      inputVersion: 1,
-      createdAt: new Date().toISOString(),
-    };
-  }
-}
 
 function initializeFramesByMenu(condition) {
   const total = condition.totalDurationMin;

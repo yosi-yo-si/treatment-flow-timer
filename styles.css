@@ -197,11 +197,6 @@ button:disabled {
 .form-message {
   min-height: 20px;
 
-  color: var(--muted);
-  font-size: 14px;
-}
-
-
   background: #f8f8fa;
   border: 1px solid var(--border);
   border-radius: 12px;
