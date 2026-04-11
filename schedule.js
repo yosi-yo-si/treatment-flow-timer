@@ -68,16 +68,27 @@ function init() {
 function getConditionInput() {
   const raw = sessionStorage.getItem(STORAGE_KEY);
 
-  }
-
   try {
     const parsed = JSON.parse(raw);
-
+    return {
       menuId: parsed.menuId,
       totalDurationMin: Number(parsed.totalDurationMin) || 0,
       focusAreas: Array.isArray(parsed.focusAreas) ? parsed.focusAreas : [],
       splitLeftRight: Boolean(parsed.splitLeftRight),
       inputVersion: Number(parsed.inputVersion) || 1,
+      createdAt: parsed.createdAt || new Date().toISOString(),
+    };
+  } catch {
+    return {
+      menuId: "custom",
+      totalDurationMin: 60,
+      focusAreas: [],
+      splitLeftRight: false,
+      inputVersion: 1,
+      createdAt: new Date().toISOString(),
+    };
+  }
+}
 
 function initializeFramesByMenu(condition) {
   const total = condition.totalDurationMin;
