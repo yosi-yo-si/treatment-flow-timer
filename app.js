@@ -45,7 +45,6 @@ const durationHelp = document.getElementById("durationHelp");
 const focusAreaList = document.getElementById("focusAreaList");
 const splitToggle = document.getElementById("splitToggle");
 const nextButton = document.getElementById("nextButton");
-const preview = document.getElementById("preview");
 const menuError = document.getElementById("menuError");
 const durationError = document.getElementById("durationError");
 const formMessage = document.getElementById("formMessage");
@@ -244,12 +243,6 @@ function renderDurationInputMode() {
   durationHelp.textContent = "選択したメニューで利用可能な時間のみ選べます。";
 }
 
-function renderPreview() {
-  if (!preview) return;
-  const payload = createPayload();
-  preview.textContent = JSON.stringify(payload, null, 2);
-}
-
 function syncFocusAreaInputs() {
   focusAreaCheckboxById.forEach((checkbox, areaId) => {
     checkbox.checked = state.focusAreas.includes(areaId);
@@ -270,6 +263,4 @@ function render() {
 
   nextButton.disabled = !state.ui.isValid;
   splitToggle.checked = state.splitLeftRight;
-
-  renderPreview();
 }

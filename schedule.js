@@ -144,7 +144,8 @@ function bindEvents() {
       ? `警告 ${state.ui.warnings.length} 件がありますが、この内容で確定しました。`
       : "警告なしで確定しました。";
 
-    confirmMessage.textContent = `${warningText}（遷移は未実装）`;
+    localStorage.setItem("treatmentScheduleOutput", JSON.stringify(payload));
+    confirmMessage.textContent = warningText;
     payloadPreview.textContent = JSON.stringify(payload, null, 2);
     console.log("TimerSchedulePayload", payload);
   });
@@ -280,7 +281,14 @@ function renderConditionSummary() {
   items.forEach(([k, v]) => {
     const div = document.createElement("div");
     div.className = "summary-item";
-    div.innerHTML = `<div class="k">${k}</div><div class="v">${v}</div>`;
+    const kEl = document.createElement("div");
+    kEl.className = "k";
+    kEl.textContent = k;
+    const vEl = document.createElement("div");
+    vEl.className = "v";
+    vEl.textContent = v;
+    div.appendChild(kEl);
+    div.appendChild(vEl);
     conditionSummary.appendChild(div);
   });
 }
@@ -312,7 +320,11 @@ function renderFramePreview() {
 
     const legend = document.createElement("div");
     legend.className = "legend-item";
-    legend.innerHTML = `<span class="dot" style="background:${color}"></span>${item.name} ${item.allocatedMin}分 (${(item.ratio * 100).toFixed(1)}%)`;
+    const dot = document.createElement("span");
+    dot.className = "dot";
+    dot.style.background = color;
+    legend.appendChild(dot);
+    legend.appendChild(document.createTextNode(`${item.name} ${item.allocatedMin}分 (${(item.ratio * 100).toFixed(1)}%)`));
     frameLegend.appendChild(legend);
   });
 }
@@ -487,7 +499,14 @@ function renderTotalsAndWarnings() {
   totalItems.forEach(([k, v]) => {
     const div = document.createElement("div");
     div.className = "summary-item";
-    div.innerHTML = `<div class="k">${k}</div><div class="v">${v}</div>`;
+    const kEl = document.createElement("div");
+    kEl.className = "k";
+    kEl.textContent = k;
+    const vEl = document.createElement("div");
+    vEl.className = "v";
+    vEl.textContent = v;
+    div.appendChild(kEl);
+    div.appendChild(vEl);
     totals.appendChild(div);
   });
 
