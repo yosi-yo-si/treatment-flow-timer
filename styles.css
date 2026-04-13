@@ -22,7 +22,8 @@ body {
 
 .container {
   max-width: 820px;
-
+  margin: 0 auto;
+  padding: 24px 16px;
 }
 
 .header h1 {
@@ -32,14 +33,17 @@ body {
 }
 
 .header p {
-
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 15px;
 }
 
 .card {
   background: var(--card);
   border-radius: 16px;
   box-shadow: var(--shadow);
-
+  padding: 24px;
+  margin-bottom: 16px;
 }
 
 label,
@@ -63,7 +67,7 @@ input[type="number"] {
   min-height: 48px;
   border: 1px solid var(--border);
   border-radius: 12px;
-
+  padding: 0 12px;
   font-size: 18px;
   background: #fff;
 }
@@ -99,13 +103,18 @@ input[type="checkbox"]:focus-visible + .slider {
 fieldset {
   border: 1px solid var(--border);
   border-radius: 12px;
+  padding: 16px;
+  margin: 0;
+}
 
+.field {
+  margin-bottom: 20px;
 }
 
 .checkbox-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-
+  gap: 8px;
 }
 
 .checkbox-option {
@@ -135,13 +144,14 @@ fieldset {
   margin: 0;
   color: var(--muted);
   font-size: 14px;
-
+  line-height: 1.4;
 }
 
 .switch {
   position: relative;
   width: 56px;
   height: 32px;
+  flex-shrink: 0;
 }
 
 .switch input {
@@ -180,23 +190,27 @@ fieldset {
 
 button {
   width: 100%;
-
+  min-height: 48px;
+  padding: 0 24px;
   border: 0;
   border-radius: 12px;
   background: var(--primary);
   color: #fff;
   font-size: 18px;
   font-weight: 700;
+  cursor: pointer;
 }
 
 button:disabled {
   background: #b4d7ff;
   color: #f4f9ff;
+  cursor: default;
 }
 
 .form-message {
   min-height: 20px;
-
+  margin-top: 16px;
+  padding: 12px 16px;
   background: #f8f8fa;
   border: 1px solid var(--border);
   border-radius: 12px;
