@@ -2,7 +2,7 @@ const STORAGE_KEY = "treatmentConditionInput";
 // 確定済みの配分結果を次画面へ受け渡すための保存キー
 const SCHEDULE_OUTPUT_KEY = "treatmentScheduleOutput";
 // 確定後に遷移する画面
-const CONFIRM_NEXT_URL = "complete.html";
+const CONFIRM_NEXT_URL = "timer.html";
 
 const MENU_LABELS = {
   custom: "カスタム",
@@ -151,7 +151,7 @@ function bindEvents() {
 
     // 1セッション内でのみ参照するためsessionStorageに保存
     sessionStorage.setItem(SCHEDULE_OUTPUT_KEY, JSON.stringify(payload));
-    confirmMessage.textContent = `${warningText} 次画面へ移動します。`;
+    confirmMessage.textContent = `${warningText} タイマー画面へ移動します。`;
     payloadPreview.textContent = JSON.stringify(payload, null, 2);
     // 保存成功後、確認画面へ遷移
     window.location.href = CONFIRM_NEXT_URL;
