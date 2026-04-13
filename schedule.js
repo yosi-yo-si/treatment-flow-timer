@@ -1,4 +1,8 @@
 const STORAGE_KEY = "treatmentConditionInput";
+// 確定済みの配分結果を次画面へ受け渡すための保存キー
+const SCHEDULE_OUTPUT_KEY = "treatmentScheduleOutput";
+// 確定後に遷移する画面
+const CONFIRM_NEXT_URL = "complete.html";
 
 const MENU_LABELS = {
   custom: "カスタム",
@@ -139,15 +143,18 @@ function bindEvents() {
   });
 
   confirmButton.addEventListener("click", () => {
+    // 現在の編集内容と警告情報を含む最終payloadを生成
     const payload = createTimerPayload();
     const warningText = state.ui.hasWarning
       ? `警告 ${state.ui.warnings.length} 件がありますが、この内容で確定しました。`
       : "警告なしで確定しました。";
 
-    localStorage.setItem("treatmentScheduleOutput", JSON.stringify(payload));
-    confirmMessage.textContent = warningText;
+    // 1セッション内でのみ参照するためsessionStorageに保存
+    sessionStorage.setItem(SCHEDULE_OUTPUT_KEY, JSON.stringify(payload));
+    confirmMessage.textContent = `${warningText} 次画面へ移動します。`;
     payloadPreview.textContent = JSON.stringify(payload, null, 2);
-    console.log("TimerSchedulePayload", payload);
+    // 保存成功後、確認画面へ遷移
+    window.location.href = CONFIRM_NEXT_URL;
   });
 }
 
