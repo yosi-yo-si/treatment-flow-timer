@@ -124,9 +124,12 @@ function moveNext() {
   if (state.index >= state.queue.length - 1) {
     pauseTimer();
     state.index = state.queue.length;
-    timerStatus.textContent = "全工程が完了しました。";
+    timerStatus.textContent = "全工程が完了しました。完了画面へ移動します…";
     renderQueue();
     render();
+    setTimeout(() => {
+      window.location.href = "complete.html";
+    }, 1200);
     return;
   }
 
