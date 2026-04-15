@@ -3,18 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>確定内容の確認</title>
+    <title>施術完了</title>
     <link rel="stylesheet" href="complete.css" />
   </head>
   <body>
     <main class="container">
       <section class="card">
-        <h1>確定内容</h1>
+        <div class="complete-icon" aria-hidden="true">✓</div>
+        <h1>施術完了</h1>
         <p id="statusText" class="status" aria-live="polite"></p>
-        <pre id="payloadView"></pre>
+
+        <dl id="summaryList" class="summary"></dl>
+
         <div class="actions">
-          <a class="button" href="schedule.html">スケジュール編集へ戻る</a>
-          <a class="button ghost" href="index.html">最初に戻る</a>
+          <a class="button" href="index.html">もう一度最初から</a>
+          <a class="button ghost" href="schedule.html">配分を変える</a>
         </div>
       </section>
     </main>
