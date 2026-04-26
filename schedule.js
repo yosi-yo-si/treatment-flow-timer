@@ -1,6 +1,3 @@
-const STORAGE_KEY = "treatmentConditionInput";
-// 確定済みの配分結果を次画面へ受け渡すための保存キー
-const SCHEDULE_OUTPUT_KEY = "treatmentScheduleOutput";
 // 確定後に遷移する画面
 const CONFIRM_NEXT_URL = "timer.html";
 
@@ -70,28 +67,25 @@ function init() {
 }
 
 function getConditionInput() {
-  const raw = sessionStorage.getItem(STORAGE_KEY);
+  const fallback = {
+    menuId: "custom",
+    totalDurationMin: 60,
+    focusAreas: [],
+    splitLeftRight: false,
+    inputVersion: 1,
+    createdAt: new Date().toISOString(),
+  };
 
-  try {
-    const parsed = JSON.parse(raw);
-    return {
-      menuId: parsed.menuId,
-      totalDurationMin: Number(parsed.totalDurationMin) || 0,
-      focusAreas: Array.isArray(parsed.focusAreas) ? parsed.focusAreas : [],
-      splitLeftRight: Boolean(parsed.splitLeftRight),
-      inputVersion: Number(parsed.inputVersion) || 1,
-      createdAt: parsed.createdAt || new Date().toISOString(),
-    };
-  } catch {
-    return {
-      menuId: "custom",
-      totalDurationMin: 60,
-      focusAreas: [],
-      splitLeftRight: false,
-      inputVersion: 1,
-      createdAt: new Date().toISOString(),
-    };
-  }
+  const parsed = TreatmentFlowInfra.storage.loadConditionInput(fallback);
+
+  return {
+    menuId: parsed && parsed.menuId ? parsed.menuId : "custom",
+    totalDurationMin: Number(parsed && parsed.totalDurationMin) || 0,
+    focusAreas: Array.isArray(parsed && parsed.focusAreas) ? parsed.focusAreas : [],
+    splitLeftRight: Boolean(parsed && parsed.splitLeftRight),
+    inputVersion: Number(parsed && parsed.inputVersion) || 1,
+    createdAt: (parsed && parsed.createdAt) || new Date().toISOString(),
+  };
 }
 
 function initializeFramesByMenu(condition) {
@@ -150,7 +144,7 @@ function bindEvents() {
       : "警告なしで確定しました。";
 
     // 1セッション内でのみ参照するためsessionStorageに保存
-    sessionStorage.setItem(SCHEDULE_OUTPUT_KEY, JSON.stringify(payload));
+    TreatmentFlowInfra.storage.saveScheduleOutput(payload);
     confirmMessage.textContent = `${warningText} タイマー画面へ移動します。`;
     payloadPreview.textContent = JSON.stringify(payload, null, 2);
     // 保存成功後、確認画面へ遷移
