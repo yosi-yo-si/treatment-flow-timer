@@ -1,4 +1,3 @@
-const STORAGE_KEY = "treatmentConditionInput";
 
 const MENU_LABELS = {
   custom: "カスタム",
@@ -100,7 +99,7 @@ function bindEvents() {
 
   nextButton.addEventListener("click", () => {
     const payload = createPayload();
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    TreatmentFlowInfra.storage.saveConditionInput(payload);
     window.location.href = "schedule.html";
   });
 }
