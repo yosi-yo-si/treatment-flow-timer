@@ -1,5 +1,3 @@
-const OUTPUT_KEY = "treatmentScheduleOutput";
-
 const timerStatus = document.getElementById("timerStatus");
 const currentName = document.getElementById("currentName");
 const currentRemain = document.getElementById("currentRemain");
@@ -21,21 +19,14 @@ const state = {
 init();
 
 function init() {
-  const raw = sessionStorage.getItem(OUTPUT_KEY);
-  if (!raw) {
+  const payload = TreatmentFlowInfra.storage.loadScheduleOutput(null);
+  if (!payload) {
     timerStatus.textContent = "確定済みデータが見つかりません。配分画面から確定してください。";
     disableControls(true);
     return;
   }
 
-  try {
-    const payload = JSON.parse(raw);
-    state.queue = buildExecutionQueue(payload);
-  } catch {
-    timerStatus.textContent = "保存データの読み込みに失敗しました。";
-    disableControls(true);
-    return;
-  }
+  state.queue = TreatmentFlowDomain.executionQueue.buildExecutionQueueFromPayload(payload);
 
   if (state.queue.length === 0) {
     timerStatus.textContent = "実行対象がありません（0分のみ）。配分を確認してください。";
@@ -49,28 +40,6 @@ function init() {
   resetToCurrentIndex(0);
   renderQueue();
   render();
-}
-
-function buildExecutionQueue(payload) {
-  const allocation = payload?.allocation;
-  if (!allocation) return [];
-
-  // より詳細な配分があればそれを優先して実行する（units > blocks > frames）
-  const base =
-    allocation.units?.length > 0
-      ? allocation.units
-      : allocation.blocks?.length > 0
-        ? allocation.blocks
-        : allocation.frames || [];
-
-  return base
-    .map((item, order) => ({
-      name: item.name || `枠${order + 1}`,
-      sec: Math.max(0, Number(item.allocatedMin || 0) * 60),
-      order,
-    }))
-    .filter((item) => item.sec > 0)
-    .sort((a, b) => a.order - b.order);
 }
 
 function bindEvents() {

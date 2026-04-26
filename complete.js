@@ -1,5 +1,3 @@
-const OUTPUT_KEY = "treatmentScheduleOutput";
-
 const MENU_LABELS = {
   custom: "カスタム",
   bodywork: "もみほぐし",
@@ -11,19 +9,14 @@ const statusText = document.getElementById("statusText");
 const summaryList = document.getElementById("summaryList");
 
 function init() {
-  const raw = sessionStorage.getItem(OUTPUT_KEY);
-  if (!raw) {
+  const payload = TreatmentFlowInfra.storage.loadScheduleOutput(null);
+  if (!payload) {
     statusText.textContent = "確定済みデータが見つかりません。スケジュール画面に戻って確定してください。";
     return;
   }
 
-  try {
-    const payload = JSON.parse(raw);
-    statusText.textContent = "お疲れ様でした！";
-    renderSummary(payload);
-  } catch {
-    statusText.textContent = "保存データの読み込みに失敗しました。";
-  }
+  statusText.textContent = "お疲れ様でした！";
+  renderSummary(payload);
 }
 
 function renderSummary(payload) {
